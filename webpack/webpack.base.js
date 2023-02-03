@@ -15,7 +15,7 @@ module.exports = {
         filename: '[name]/[name].bundle.js' ,
         path: path.join(__dirname,'../dist'),
         globalObject: 'this',
-        publicPath: './' // 打包后文件的公共前缀路径
+        publicPath: '' // 打包后文件的公共前缀路径
     },
     module: {
         rules: [
@@ -34,7 +34,7 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname,'../public/index.html'),
-            inject:true
+            inject: true
         }),
         definePlugin
     ],

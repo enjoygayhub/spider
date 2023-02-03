@@ -7,7 +7,13 @@ const devConfig = {
     devtool: 'eval-cheap-module-source-map',
     devServer:{
         host: 'localhost',
-        port:8088,
+        open: {
+            target: ['index.html'],
+            app: {
+                name: 'chrome',
+            },
+        },
+        port:3002,
         compress:false,
         hot:true,
         historyApiFallback:true,
