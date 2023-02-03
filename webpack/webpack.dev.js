@@ -6,13 +6,13 @@ const devConfig = {
     mode: 'development',
     devtool: 'eval-cheap-module-source-map',
     devServer:{
-        host: '127.0.0.1',
-        port:8000,
+        host: 'localhost',
+        port:8088,
         compress:false,
         hot:true,
         historyApiFallback:true,
         static:{
-            directory: path.join( __dirname ,'../dist'),
+            directory: path.join( __dirname,'../dist'),
         },
         proxy:{
             './service':{
