@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const MiniCssExtractPlugin =  require('mini-css-extract-plugin')
 
 const { NODE_ENV } = process.env;
 console.log('当前环境：', NODE_ENV)
@@ -9,10 +9,14 @@ const definePlugin = new webpack.DefinePlugin({
     NODE_ENV: JSON.stringify(NODE_ENV),
 });
 
+const cssPlugin = new MiniCssExtractPlugin({
+    filename: '[name].[contenthash].css' // 抽离css的输出目录和名称
+});
+
 module.exports = {
     entry: path.join(__dirname, '../src/index.tsx'),
     output: {
-        filename: '[name]/[name].bundle.js',
+        filename: '[name]/[name].[chunkhash:8].bundle.js',
         path: path.join(__dirname, '../dist'),
         globalObject: 'this',
         publicPath: '' // 打包后文件的公共前缀路径
@@ -27,11 +31,12 @@ module.exports = {
                         presets: ["@babel/preset-react", "@babel/preset-typescript"]
                     }
                 },
+                include: [/src/],
                 exclude: [/node_modules/, /public/]
             },
             {
                 test: /.(css|sass)$/,
-                use: ['style-loader',
+                use: [ NODE_ENV==='prod' ? MiniCssExtractPlugin.loader:'style-loader',
                     {
                         loader: "css-loader",
                         options: {
@@ -55,7 +60,7 @@ module.exports = {
                     }
                 },
                 generator: {
-                    filename: 'static/image/[name][ext]'
+                    filename: 'static/image/[name].[contenthash:8][ext]'
                 }
             },
             {
@@ -77,9 +82,16 @@ module.exports = {
             template: path.resolve(__dirname, '../public/index.html'),
             inject: true
         }),
-        definePlugin
+        definePlugin,cssPlugin
     ],
+    cache: {
+        type: 'filesystem', // 使用文件缓存
+    },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
+        modules: [path.resolve(__dirname, '../node_modules')],
+        alias: {
+            '@':path.join(__dirname, '../src')
+        }
     }
 }

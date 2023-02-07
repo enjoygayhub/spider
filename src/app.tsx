@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "./app.scss"
+import "@/app.scss"
 import JPG from "./assets/dove.jpg"
 
 function App() {
