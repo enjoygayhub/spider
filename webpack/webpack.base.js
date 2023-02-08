@@ -16,7 +16,7 @@ const cssPlugin = new MiniCssExtractPlugin({
 module.exports = {
     entry: path.join(__dirname, '../src/index.tsx'),
     output: {
-        filename: '[name]/[name].[chunkhash:8].bundle.js',
+        filename: '[name].[chunkhash:8].bundle.js',
         path: path.join(__dirname, '../dist'),
         globalObject: 'this',
         publicPath: '' // 打包后文件的公共前缀路径

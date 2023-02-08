@@ -10,7 +10,7 @@ const devConfig = {
     devServer:{
         host: 'localhost',
         open: {
-            target: ['index.html'],
+            target: ['/'],
             app: {
                 name: 'chrome',
             },
